@@ -1,9 +1,16 @@
 ---
 layout: page
-title: About
+title: About Us
 permalink: /about/
 ---
 
+Bo Shang, bshang@g.harvard.edu
+
+Christopher Lee, chl2967@g.harvard.edu
+
+Sriganesh Pera, srp124@g.harvard.edu
+
+f
 This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
 
 You can find the source code for Minima at GitHub:
