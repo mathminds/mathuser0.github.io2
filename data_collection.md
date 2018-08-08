@@ -1,9 +1,15 @@
+---
+layout: Page
+title: Raw Data
+permalink: /raw_data/
 
-# Data Construction
+---
+
+# Gathering Raw Data
 
 ## 1. Section Description
 
-This section is all about building the dataset used in this project. It should be noted that all analyses and results hereafter are limited to the dataset formulated in this section. With that, it should also be noted that the code and methodology used here are not bound to this particular dataset. That is to say, you should be able to use the code and methods set forth below to build a completely different set of data that fits your particular needs. 
+This section is all about building the dataset used in this project. It should be noted that all analyses and results hereafter are limited to the dataset formulated in this section. With that, it should also be noted that the code and methodology used here are not bound to this particular dataset. That is to say, you should be able to use the code and methods set forth below to build a completely different set of data that fits your particular needs.
 
 
 
@@ -16,64 +22,64 @@ The data for this project was opted to be formulated based on official U.S. gove
 5.	Barack Obama (@BarackObama) - 45th President
 6.	Robert S. Mueller (@BobSMueller) – Head of Special Counsel investigation
 7.	John Kelly (@GeneralJohnK) – White House Chief of Staff
-8.	Ben Carson (@SecretaryCarson) – 17th Secretary of Housing & Urban Development 
+8.	Ben Carson (@SecretaryCarson) – 17th Secretary of Housing & Urban Development
 9.	Rick Perry (@Secretaryperry) – 14th Secretary of Energy
 10.	Alex Acosta (@SecretaryAcosta) – 27th Secretary of Labor
-11.	Kirstjen Nielsen (@SecNielsen) – 6th Secretary of Homeland Security 
-12.	Alex Azar (@SecAzar) – 24th Secretary of Health & Human Services 
-13.	Linda McMahon (@SBALinda) – 25th Administrator of SBA 
+11.	Kirstjen Nielsen (@SecNielsen) – 6th Secretary of Homeland Security
+12.	Alex Azar (@SecAzar) – 24th Secretary of Health & Human Services
+13.	Linda McMahon (@SBALinda) – 25th Administrator of SBA
 14.	Nikki Haley (@nikkihaley) – 29th U.S. Ambassador to the United Nations
 
-Using the Tweepy API, we queried for the screen names of the 200 most recent followers for each of the accounts in the list above except @nikkihaley, for which we acquired the screen names of the 600 most recent followers. In total, we gathered 2,800 screen names of Twitter users who have shown interest in government affairs. (See [code](#code_23)) 
+Using the Tweepy API, we queried for the screen names of the 200 most recent followers for each of the accounts in the list above except @nikkihaley, for which we acquired the screen names of the 600 most recent followers. In total, we gathered 2,800 screen names of Twitter users who have shown interest in government affairs. (See [code](#code_23))
 
 It is inconceivable to think that these government related accounts are controlled by malicious Twitter bots. Rather, we are more interested in the Twitter accounts that monitor these accounts. Therefore, the 200 most recent followers for each of the 14 accounts were collected and analyzed in this project, with the exception of Nikki Haley, the 29th U.S. Ambassador to the United Nations, for whom the 600 most recent followers were acquired, due to an issue encountered (described in more detail below). In total, our dataset was built upon a list of 3,200 (= 13 x 200 + 1 x 600) Twitter accounts.
 
-It is important to note that the machine learning techniques used in this project were limited to supervised learning methods. Therefore, the data necessarily consists of two parts: features and labels. 
+It is important to note that the machine learning techniques used in this project were limited to supervised learning methods. Therefore, the data necessarily consists of two parts: features and labels.
 
-### 1.1. Features 
+### 1.1. Features
 
-The basic atomic building block of all things Twitter is the [Tweet object](https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/tweet-object.html), and every tweet is actually a Tweet object. The text portion of a tweet that we are used to seeing is actually just one of many attributes in an instantiated Tweet object. 
+The basic atomic building block of all things Twitter is the [Tweet object](https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/tweet-object.html), and every tweet is actually a Tweet object. The text portion of a tweet that we are used to seeing is actually just one of many attributes in an instantiated Tweet object.
 
 We built our raw features data from the tweets created by the followers in our list. Using the Tweepy API again, we requested for the 200 most recent tweets of each follower in our list. Note that by doing this, for followers who had made less than 200 tweets total, all of their tweets were collected. (See [code](#code_24))
 
 
 
-Our next step involved using the Tweepy API again, this time requesting the 200 most recent tweets for each of the 3,200 followers. Our search terms and parameters are shown in Figure 2 below. 
+Our next step involved using the Tweepy API again, this time requesting the 200 most recent tweets for each of the 3,200 followers. Our search terms and parameters are shown in Figure 2 below.
 
- 
-Figure 2. The search terms and parameters we used to get the 200 most recent tweets for each ‘user’ in our list of 3,200 followers, ‘userlist’. It was not easy to figure out how to collect all the tweets from all the users into a single file. Our solution was to create 3,200 files and stitch them back up together afterwards. 
+
+Figure 2. The search terms and parameters we used to get the 200 most recent tweets for each ‘user’ in our list of 3,200 followers, ‘userlist’. It was not easy to figure out how to collect all the tweets from all the users into a single file. Our solution was to create 3,200 files and stitch them back up together afterwards.
 
 After spending too much time trying to get all the tweets of all 3,200 followers placed into one file in a single run, we decided it would be easier to put together 3,200 files (one for each follower) by iteration and Pandas. Figure 3 shows the code we used to do this.
 
- 
+
 Figure 3. The code that created a Pandas DataFrame object containing our raw dataset.
 
-The resulting DataFrame object is shown in Figure 4. At this point, our raw dataset consisted of 107,158 observations or Tweet objects. This concluded our acquisition of raw data to use as features in our machine learning model. 
+The resulting DataFrame object is shown in Figure 4. At this point, our raw dataset consisted of 107,158 observations or Tweet objects. This concluded our acquisition of raw data to use as features in our machine learning model.
 
- 
+
 Figure 4. Our raw feature dataset. Each row is a Tweet object.
 
 ### 1.2. Building the Labels
 
-Our next mission was to acquire response variable data. As we mentioned in Milestone #2, we will be deriving our “true” response values from Botometer scores. Please note that the Botometer API is a government funded project and we determined it to be a relatively reliable source for benchmarking our model predictions. 
+Our next mission was to acquire response variable data. As we mentioned in Milestone #2, we will be deriving our “true” response values from Botometer scores. Please note that the Botometer API is a government funded project and we determined it to be a relatively reliable source for benchmarking our model predictions.
 
-We used the Botometer API to obtain scores for each follower in our list. It should be noted that the Botometer API responds with many different scores. Figure 5 shows an example of a Botometer API response, where the highlighted score is the one we chose to use for our project. 
+We used the Botometer API to obtain scores for each follower in our list. It should be noted that the Botometer API responds with many different scores. Figure 5 shows an example of a Botometer API response, where the highlighted score is the one we chose to use for our project.
 
- 
+
 Figure 5. Example of a Botometer API response. There are categories and sub-categories of scores to choose from. Our research into the meaning behind each score led us to choose the score that is highlighted.
 
-After jumping through some hurdles, we were able to compile a DataFrame with the screen name of the followers in our list in one column, and their corresponding score in another column. 
+After jumping through some hurdles, we were able to compile a DataFrame with the screen name of the followers in our list in one column, and their corresponding score in another column.
 
-We realized at this point that a significant portion of our list of followers had scores that were NaN values. Upon further examination, we determined that a NaN score is given to Twitter accounts that have never tweeted. Since a Twitter bot that does not tweet is unable to bear malice toward society, it would not be a bot worth detecting. Therefore, we decided to assume that followers with NaN scores are all humans. 
+We realized at this point that a significant portion of our list of followers had scores that were NaN values. Upon further examination, we determined that a NaN score is given to Twitter accounts that have never tweeted. Since a Twitter bot that does not tweet is unable to bear malice toward society, it would not be a bot worth detecting. Therefore, we decided to assume that followers with NaN scores are all humans.
 
 Now, a Botometer score that is not a NaN can take on continuous values between 0 and 1, and it is a measure of how likely it is that the associated Twitter account is a bot. We decided to derive our response variable as being equal to 1 if the Botometer score is greater than 0.5, and equal to 0 otherwise. Creating a new column called “bot_or_not”, our Botometer score DataFrame took on the form as shown in Figure 6.
 
- 
-Figure 6. Our Botometer dataset which contains the column, “bot_or_not”, indicating whether a ‘follower’ is a bot or not. 
+
+Figure 6. Our Botometer dataset which contains the column, “bot_or_not”, indicating whether a ‘follower’ is a bot or not.
 
 
 
-in this section  This 
+in this section  This
 
 <a id='code'>code</a>
 
@@ -99,7 +105,7 @@ import botometer
 
 # Setting up API_KEY and API_SECRET
 # Tweepy Authentication Setup
-auth = tweepy.AppAuthHandler("9Gpcxva2RwolHrDLdhRhYlVln", 
+auth = tweepy.AppAuthHandler("9Gpcxva2RwolHrDLdhRhYlVln",
                              "ylLbTVYjTz6Px2AGV6W662QDKjYDdCuAO3aa6ybStlrCOguK0b")
 
 # Tweepy.API object for easier retrieval of Twitter data
@@ -163,7 +169,7 @@ number_of_followers_to_retrieve=200
 # Iterate to create a list of the 200 most recent followers
 follower_list=[]
 for politician in politician_list:
-    for item in tweepy.Cursor(api.followers, 
+    for item in tweepy.Cursor(api.followers,
                               id=politician).items(number_of_followers_to_retrieve):
         follower_list.append(item.screen_name)
 
@@ -296,7 +302,7 @@ for follower in follower_list:
 
     TypeError: getresponse() got an unexpected keyword argument 'buffering'
 
-    
+
     During handling of the above exception, another exception occurred:
 
 
@@ -311,7 +317,7 @@ for follower in follower_list:
     /anaconda/lib/python3.6/site-packages/OpenSSL/SSL.py in recv_into(self, buffer, nbytes, flags)
        1546             result = _lib.SSL_read(self._ssl, buf, nbytes)
     -> 1547         self._raise_ssl_error(self._ssl, result)
-       1548 
+       1548
 
 
     /anaconda/lib/python3.6/site-packages/OpenSSL/SSL.py in _raise_ssl_error(self, ssl, result)
@@ -320,9 +326,9 @@ for follower in follower_list:
        1354         elif error == _lib.SSL_ERROR_WANT_WRITE:
 
 
-    WantReadError: 
+    WantReadError:
 
-    
+
     During handling of the above exception, another exception occurred:
 
 
@@ -340,7 +346,7 @@ for follower in follower_list:
         248             return method
         249         else:
     --> 250             return method.execute()
-        251 
+        251
         252     # Set pagination mode
 
 
@@ -356,15 +362,15 @@ for follower in follower_list:
         506         }
         507         send_kwargs.update(settings)
     --> 508         resp = self.send(prep, **send_kwargs)
-        509 
+        509
         510         return resp
 
 
     /anaconda/lib/python3.6/site-packages/requests/sessions.py in send(self, request, **kwargs)
-        616 
+        616
         617         # Send the request
     --> 618         r = adapter.send(request, **kwargs)
-        619 
+        619
         620         # Total elapsed time of the request (approximately)
 
 
@@ -373,14 +379,14 @@ for follower in follower_list:
         439                     retries=self.max_retries,
     --> 440                     timeout=timeout
         441                 )
-        442 
+        442
 
 
     /anaconda/lib/python3.6/site-packages/urllib3/connectionpool.py in urlopen(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, **response_kw)
         599                                                   timeout=timeout_obj,
         600                                                   body=body, headers=headers,
     --> 601                                                   chunked=chunked)
-        602 
+        602
         603             # If we're going to release the connection in ``finally:``, then
 
 
@@ -409,7 +415,7 @@ for follower in follower_list:
 
 
     /anaconda/lib/python3.6/http/client.py in _read_status(self)
-        256 
+        256
         257     def _read_status(self):
     --> 258         line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
         259         if len(line) > _MAXLINE:
@@ -436,23 +442,23 @@ for follower in follower_list:
          31     or optionally a single socket if passed in. Returns a list of
          32     sockets that can be read from immediately. """
     ---> 33     return _wait_for_io_events(socks, EVENT_READ, timeout)
-         34 
-         35 
+         34
+         35
 
 
     /anaconda/lib/python3.6/site-packages/urllib3/util/wait.py in _wait_for_io_events(socks, events, timeout)
          24             selector.register(sock, events)
          25         return [key[0].fileobj for key in
     ---> 26                 selector.select(timeout) if key[1] & events]
-         27 
-         28 
+         27
+         28
 
 
     /anaconda/lib/python3.6/site-packages/urllib3/util/selectors.py in select(self, timeout)
-        511 
+        511
         512             kevent_list = _syscall_wrapper(self._kqueue.control, True,
     --> 513                                            None, max_events, timeout)
-        514 
+        514
         515             for kevent in kevent_list:
 
 
@@ -464,7 +470,7 @@ for follower in follower_list:
          66             errcode = None
 
 
-    KeyboardInterrupt: 
+    KeyboardInterrupt:
 
 
 At this point, we had a separate file containing the tweets for each follower. Our next step was to construct a single dataframe from these files as follows.
@@ -2021,10 +2027,10 @@ The Botometer score forms the basis for our labels, and we derive our "true" res
 # Create DataFrame with the list of followers
 df_labels = pd.DataFrame(follower_list, columns=['follower'])
 
-# For each follower, retrieve their Botometer score and insert into 
+# For each follower, retrieve their Botometer score and insert into
 # the DataFrame under the column named 'bm_score'
 for i in range(len(follower_list)):
-    try: 
+    try:
         df_labels['bm_score'][i]=get_bm_score(df_labels['follower'][i])
     except:
         df_labels['bm_score'][i]=np.NAN
@@ -2048,7 +2054,7 @@ df_labels.describe()
 
 2. In 2.4, it was difficult to get all the tweets of all the followers placed into one single text file. Our solution was to create 3,200 separate files for each of the followers in our list, and afterwards stitch up the 3,200 files together in a single dataframe. Please note that we highly suspect there may be an easier way to do this, and any advice would be greatly appreciated.
 
-2.	The Botometer scores took a really long time to get, largely due to the slow response time for each request. At one point, we received an e-mail notification from Rapid API, the provider of the Botometer API, stating that 85% of our free subscription had been consumed. This led us to be more mindful of our limited resources, and eventually we settled on 3,200 scores. 
+2.	The Botometer scores took a really long time to get, largely due to the slow response time for each request. At one point, we received an e-mail notification from Rapid API, the provider of the Botometer API, stating that 85% of our free subscription had been consumed. This led us to be more mindful of our limited resources, and eventually we settled on 3,200 scores.
 
 
 ## 4. Remarks
