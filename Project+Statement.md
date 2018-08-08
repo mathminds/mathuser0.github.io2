@@ -2,8 +2,10 @@
 layout: page
 title: Project Statement
 permalink: /project_statement
-theme: Minima
+
 ---
+
+
 
 # Project Statement
 

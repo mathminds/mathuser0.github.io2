@@ -1,9 +1,12 @@
 ---
 layout: page
 title: Raw Data
-permalink: /raw_data/
+permalink: /raw_data
 
 ---
+
+
+
 
 # Gathering Raw Data
 

@@ -1,9 +1,13 @@
 ---
 layout: page
 title: Data Processing
-permalink: /data_processing/
+permalink: /data_processing
 
 ---
+
+
+
+
 # Data Processing
 
 ## 1. Section Description
