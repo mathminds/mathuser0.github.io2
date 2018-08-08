@@ -8059,7 +8059,7 @@ ax[1].set_ylabel("Username of Humans", fontsize=18)
 
 
 
-![png](output_165_1.png)
+![img]({{ site.baseurl }}/imgs/output_165_1.png)
 
 
 
