@@ -14,6 +14,7 @@ Each row in our feature dataset is a Tweet object. Some of the columns have valu
 
 
 Column Name	|Description
+---|---
 created_at	|Time the tweet was created
 id	|ID of this Tweet
 in_reply_to_screen_name	|If this Tweet is a reply, contains original Tweet's author
@@ -25,6 +26,7 @@ retweet_count	|Number of times this Tweet has been retweeted
 favorite_count	|Indicates how many times this Tweet has been liked by Twitter users
 truncated	|Indicates whether the value of the text parameter was truncated
 text	|The text content of the Tweet
+---|---
 
 Table 1. Columns that are of interest to us and their content descriptions.
 
@@ -35,6 +37,7 @@ Of the columns that contain nested dictionaries, we decided to only look at the 
 The keys that we chose to extract from the nested dictionary in the ‘user’ column are listed in Table 2 along with their description.
 
 |Column Name|	Description|
+---|---
 id_str	|String representation of the unique identifier for this User
 name	|Display name of user
 screen_name	|Screen name of user
@@ -60,17 +63,17 @@ Because some of the column names in Table 2 coincide (in terms of column name) w
 
 Since we are dealing with the ‘english’ Botometer score, it made sense to remove all rows that were not in English. Selecting only the rows that had ‘lang’ column value equal to ‘en’ and dropping the others reduced the number of rows further to 91,423 rows. Then, selecting only the rows that had ‘user_lang’ column values of ‘en’ further reduced the number of rows to 89,306 rows. We created a function to do this which is shown in Figure 8.
 
-
+![an image alt text]({{ site.baseurl }}/imgs/fig08.png)
 Figure 8. Function created to select certain rows. The function was used to get the rows that have ‘en’ as their ‘lang’ value, and then it was used again to get the rows that have ‘en’ as their ‘user_lang’ value. Note that ‘lang’ is a column of the Tweet object , whereas ‘user_lang’ was obtained from the nested dictionary within the ‘user’ column of the Tweet object. Notice how they are not necessarily the same.
 
 Next, using functions we created, the columns that contained a single value were identified and dropped as can be seen in Figure 9.
 
-
+![an image alt text]({{ site.baseurl }}/imgs/fig09.png)
 Figure 9. Identification and dropping of single valued columns.
 
 Then, the columns for which more than half the values were NaNs were dropped as can be seen in Figure 10.
 
-
+![an image alt text]({{ site.baseurl }}/imgs/fig10.png)
 Figure 10. Identifying and dropping columns with too many Nan values.
 
 Finally, we were ready to add the response variable column to our dataset. The plan was, for each row, get the author’s Twitter screen name (from the ‘user_screen_name’ column), find the corresponding ‘bot_or_not’ value in our Botometer dataset, and add it to our feature dataset in a new column also named ‘bot_or_not’.
@@ -101,7 +104,7 @@ To extract numerical features from the ‘text’ column, we did some basic feat
 
 It is worth noting that we had to install/import the nltk module, and then download the stopwords corpus in order to create the ‘stopwords’ column. The code we used to extract these features are shown in Figure 11 below.
 
-
+![an image alt text]({{ site.baseurl }}/imgs/fig11.png)
 Figure 11. Basic feature extraction on the 'text' column of our feature dataset.
 
  
@@ -126,18 +129,18 @@ It should be noted that we wanted to do spelling correction too, but due to this
 For Milestone 3, we chose to include two advanced feature columns: ‘sentiment_polarity’ and ‘sentiment_subjectivity’. These columns were obtained using the sentiment() method of the textblob module as shown in Figure 13.
 
 
-
+![an image alt text]({{ site.baseurl }}/imgs/fig13.png)
 Figure 13. Sentiment predictors added to our baseline dataset.
 
 
 For the record, we also succeeded in creating a TF-IDF matrix of 1,000 words, but we decided not to use it for our baseline model because it added too many columns and we were unsure about how to utilize it. We plan to look further into making use of TF-IDF matrix in our final report. Figure 14 shows the code we used to get our TF-IDF matrix, and Figure 15 shows the TF-IDF matrix we were able to create.
 
 
-
+![an image alt text]({{ site.baseurl }}/imgs/fig14.png)
 Figure 14. Code we used to create a TF-IDF matrix on our dataset.
 
 
-
+![an image alt text]({{ site.baseurl }}/imgs/fig15.png)
 Figure 15. The TF-IDF matrix we generated. Notice how most of the values are 0. The highlighted value in row=2, col=’poll’ indicates that the TF-IDF matrix was indeed correctly made.
 
 
