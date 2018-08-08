@@ -6,9 +6,6 @@ permalink: /project_statement
 ---
 
 
-
-# Project Statement
-
 ## Background
 Most Americans are exposed to a daily dose of false or misleading content — hoaxes, conspiracy theories, fabricated reports, click-bait headlines, and even satire. Such content is collectively referred to as “misinformation". There have been verified instances of misinformation and disinformation spreading on social media inflicting real harm on society, such as dangerous health decisions and stock market manipulations to name a few [[1]](https://arxiv.org/abs/1707.07592). Such events has led world leaders to identify the massive spread of digital misinformation as [a major global risk](http://reports.weforum.org/global-risks-2013/risk-case-1/digital-wildfires-in-a-hyperconnected-world/?doing_wp_cron=1533730169.0472350120544433593750). The impact of online misinformation spreading through the mechanism of malicious bots might be prevented if the activities of such bots are identified quickly and accurately [[1]](https://arxiv.org/abs/1707.07592).
 
