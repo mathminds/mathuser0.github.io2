@@ -116,7 +116,7 @@ In order to do text analysis, it is necessary to pre-process the text data, so t
 The code we used to do this is shown in Figure 12.
 
 
-
+![an image alt text]({{ site.baseurl }}/imgs/fig12.png "Pre-processing of text data to prepare it for advanced feature extraction")
 Figure 12. Pre-processing of text data to prepare it for advanced feature extraction.
 
 
