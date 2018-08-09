@@ -1,3 +1,10 @@
+---
+layout: page
+title: Models
+permalink: /models
+
+---
+
 
 # Simple Models
 
@@ -80,34 +87,34 @@ def how_many_uniques(df):
 def visualize_prob(model, x, y, ax):
     # Use the model to predict probabilities for
     y_pred = model.predict_proba(x)
-    
+
     # Separate the predictions on the label 1 and label 0 points
     ypos = y_pred[y==1]
     yneg = y_pred[y==0]
-    
+
     # Count the number of label 1 and label 0 points
     npos = ypos.shape[0]
     nneg = yneg.shape[0]
-    
-    # Plot the probabilities on a vertical line at x = 0, 
+
+    # Plot the probabilities on a vertical line at x = 0,
     # with the positive points in blue and negative points in red
     pos_handle = ax.plot(np.zeros((npos,1)), ypos[:,1], 'bo', label = 'Cancer Type 1')
     neg_handle = ax.plot(np.zeros((nneg,1)), yneg[:,1], 'ro', label = 'Cancer Type 0')
 
     # Line to mark prob 0.5
     ax.axhline(y = 0.5, color = 'k', linestyle = '--')
-    
+
     # Add y-label and legend, do not display x-axis, set y-axis limit
     ax.set_ylabel('Probability of AML class')
     ax.legend(loc = 'best')
     ax.get_xaxis().set_visible(False)
     ax.set_ylim([0,1])
-    
-    
-    
+
+
+
 #--------  plot_decision_boundary
 # A function that visualizes the data and the decision boundaries
-# Input: 
+# Input:
 #      x (predictors)
 #      y (labels)
 #      model (the classifier you want to visualize)
@@ -122,7 +129,7 @@ def plot_decision_boundary(x, y, model, title, ax, poly_degree=None):
     max0 = x[:,0].max()
     interval0 = np.arange(min0, max0, (max0-min0)/100)
     n0 = np.size(interval0)
-    
+
     # Interval of points for biomarker 2
     min1 = x[:,1].min()
     max1 = x[:,1].max()
@@ -141,24 +148,24 @@ def plot_decision_boundary(x, y, model, title, ax, poly_degree=None):
         # Use PolynomialFeatures to generate polynomial terms
         poly = PolynomialFeatures(poly_degree,include_bias = False)
         xx_ = poly.fit_transform(xx)
-        yy = model.predict(xx_) 
-        
+        yy = model.predict(xx_)
+
     else:   
         yy = model.predict(xx)
-        
+
     yy = yy.reshape((n0, n1))
 
     # Plot decision surface
     x1 = x1.reshape(n0, n1)
     x2 = x2.reshape(n0, n1)
     ax.contourf(x1, x2, yy, cmap=plt.cm.coolwarm, alpha=0.8)
-    
+
     # Plot scatter plot of data
     yy = y.reshape(-1,)
     ax.scatter(x[yy==1,0], x[yy==1,1], c='blue', label='Normal', cmap=plt.cm.coolwarm)
     ax.scatter(x[yy==2,0], x[yy==2,1], c='cyan', label='Hyper', cmap=plt.cm.coolwarm)
     ax.scatter(x[yy==3,0], x[yy==3,1], c='red', label='Hypo', cmap=plt.cm.coolwarm)
-    
+
     # Label axis, title
     ax.set_title(title)
     ax.set_xlabel('Biomarker 1')
@@ -434,7 +441,7 @@ qda.score(X_test,y_test)
 
 ```python
 max_score = 0
-max_k = 0 
+max_k = 0
 
 for k in range(1,26):
     knn = KNeighborsClassifier(n_neighbors = k)
@@ -442,7 +449,7 @@ for k in range(1,26):
     if score > max_score:
         max_k = k
         max_score = score
-        
+
 knn = KNeighborsClassifier(n_neighbors = max_k)
 knn.fit(X_train,y_train)
 ```

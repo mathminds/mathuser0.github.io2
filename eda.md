@@ -1,5 +1,15 @@
+---
+layout: page
+title: EDA
+permalink: /eda
 
-EDA Visualizations and Remarks
+---
+
+
+
+
+
+# Exploratory Data Analysis Visualizations and Remarks
 
 
 ```python
@@ -75,36 +85,36 @@ def how_many_uniques(df):
 
 
 ```python
-# Plot histogram comparison of Bots vs Humans 
-def hist_bot_vs_hum(predictor, title=None, bins=25, normed=True, 
+# Plot histogram comparison of Bots vs Humans
+def hist_bot_vs_hum(predictor, title=None, bins=25, normed=True,
                     xmin=None,xmax=None, ymin=None,ymax=None):
     fig, ax = plt.subplots(figsize=(14,8))
     if title:
         ax.set_title(title, fontsize=24)
-    
+
     if (xmin!=None) & (xmax!=None):
         ax.set_xlim(xmin,xmax)
-    
+
     if (ymin!=None) & (ymax!=None):
         ax.set_ylim(ymin,ymax)
-    
+
     if normed:
         ax.set_ylabel("Frequency", fontsize=18)
     else:
         ax.set_ylabel("Counts", fontsize = 18)
-        
-    ax.hist(hum_X_train[predictor], bins=bins, normed=normed, 
+
+    ax.hist(hum_X_train[predictor], bins=bins, normed=normed,
             label="Humans", color='r', alpha = 0.2)
-    
-    ax.hist(bot_X_train[predictor], bins=bins, normed=normed, 
+
+    ax.hist(bot_X_train[predictor], bins=bins, normed=normed,
             label="Bots", color='b', alpha = 0.2)
 
     ax.set_xlabel("Value of "+predictor, fontsize=18)
-    
+
     ax.grid(True, '--',alpha=0.2)
     ax.legend(fontsize=18, loc=1)
-    
-    
+
+
 ```
 
 
@@ -125,7 +135,7 @@ bot_y_train = y_train.loc[y_train[y_train==1].index]
 
 
 ```python
-hist_bot_vs_hum('user_listed_count', 
+hist_bot_vs_hum('user_listed_count',
                 "Number of Public Lists Each Account Belongs to",
                 bins=25,normed=True, xmin=0, xmax=250)
 ```
@@ -148,7 +158,7 @@ visual_bot_vs_hum(['upper','retweet_count'],"Number of Retweets vs. Number of Up
 
     <ipython-input-8-3123d597a407> in <module>()
     ----> 1 visual_bot_vs_hum(['upper','retweet_count'],"Number of Retweets vs. Number of Uppercase Words", hum=1,ylim=300000)
-    
+
 
     NameError: name 'visual_bot_vs_hum' is not defined
 
