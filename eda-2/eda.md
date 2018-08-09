@@ -1,7 +1,7 @@
 ---
 layout: page
-title: EDA2
-permalink: /eda2
+title: EDA
+permalink: /eda
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Models 2
-permalink: /models2
+title: Models
+permalink: /models
 
 ---
 
