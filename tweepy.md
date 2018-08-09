@@ -26,7 +26,7 @@ import tweepy
 # from nltk.corpus import stopwords
 
 # Setting up API_KEY and API_SECRET
-auth = tweepy.AppAuthHandler("9Gpcxva2RwolHrDLdhRhYlVln", "ylLbTVYjTz6Px2AGV6W662QDKjYDdCuAO3aa6ybStlrCOguK0b")
+auth = tweepy.AppAuthHandler("[API_KEY]", "[API_SECRET]")
 
 # Setting up tweepy.API object
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
