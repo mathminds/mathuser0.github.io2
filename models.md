@@ -1,5 +1,12 @@
+---
+layout: page
+title: Models
+permalink: /models
 
-# Simple Models
+---
+
+
+# Models
 
 # Libraries
 
@@ -34,7 +41,7 @@ from sklearn.metrics        import f1_score
 from sklearn.metrics        import confusion_matrix
 from sklearn.metrics        import r2_score
 
-# Discriminant Analysis 
+# Discriminant Analysis
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
 
@@ -79,7 +86,7 @@ from sklearn.neural_network  import MLPClassifier
 def split_X_y(filename):
     # Read csv files in to pandas dataframe
     df=pd.read_csv(filename,index_col=0)
-    
+
     # return DataFrame object with labels dropped, and a Series object of labels
     return df.drop('bot_or_not',axis=1), df.bot_or_not
 
@@ -88,42 +95,42 @@ def split_X_y(filename):
 def get_scores(model):
     '''
     Function: Displays the following:
-        Accuracy Score, Precision Score, Recall Score, F1 Score, 
+        Accuracy Score, Precision Score, Recall Score, F1 Score,
         Training Set Confusion Matrix, Test Set Confusion Matrix
 
     Input: a fitted classification model
-    
+
     Output: None
     '''
-    
+
     print("------" + str(model.__class__).split('.')[-1].split("'")[0]+ "--------\n")
     print("-----------------------------------\nModel Scores")    
 
     # Create dataframe of accuracy, precision, recall, and F1 scores for training and test sets
     df = pd.DataFrame(index=['Accuracy','Precision','Recall','F1'], columns=['Training','Test'])
 
-    # These are the scores we want to know 
+    # These are the scores we want to know
     scores = [accuracy_score, precision_score, recall_score, f1_score]
-    
+
     # Loading scores into columns
     df['Training']=np.array([score(y_train, model.predict(X_train)) for score in scores])
     df['Test']=np.array([score(y_test, model.predict(X_test)) for score in scores])
-    
+
     # Display the dataframe
     display(df)
     print("-----------------------------------")    
 
     # Display Confusion Matrix of training set
     show_confusion(model, train=True)
-    
+
     # Display Confusion Matrix of test set
     show_confusion(model, train=False)
-    
+
     # Mark the end of current model analysis
     print("------" + str(model.__class__).split('.')[-1].split("'")[0]+ "--------\n")
 
 
-    
+
 # Create a confusion matrix dataframe, display it, and return it
 def show_confusion(model, train=False):
     '''
@@ -131,7 +138,7 @@ def show_confusion(model, train=False):
 
     Input: a fitted classification model for the confusion matrix
            a boolean indicating whether to show training (default) or test confusion matrix
-    
+
     Output: None
     '''
     # If train=True, then use training set, otherwise use test set
@@ -141,15 +148,15 @@ def show_confusion(model, train=False):
     else:
         dataset=(X_test,y_test)
         print("Test Set Confusion Matrix")
-    
+
     # Create DataFrame with Confusion Matrix
-    df = pd.DataFrame(confusion_matrix(dataset[1], model.predict(dataset[0])), 
-                      index=['Predicted True','Predicted False'], 
+    df = pd.DataFrame(confusion_matrix(dataset[1], model.predict(dataset[0])),
+                      index=['Predicted True','Predicted False'],
                       columns=['True','False'], )
 
     # Display Confusion Matrix
     display(df)  
-    
+
     print("-----------------------------------\n")
 
 
@@ -185,12 +192,12 @@ display(df_trivial)
 print("------------------------------------------")
 print("Trivial Confusion Matrix for Training Data")
 display(pd.DataFrame(confusion_matrix(y_train, np.zeros(len(y_train))),
-             index=['Predicted True','Predicted False'], 
+             index=['Predicted True','Predicted False'],
              columns=['True','False']))
 print("------------------------------------------")
 print("Trivial Confusion Matrix for Test Data")
 display(pd.DataFrame(confusion_matrix(y_test, np.zeros(len(y_test))),
-             index=['Predicted True','Predicted False'], 
+             index=['Predicted True','Predicted False'],
              columns=['True','False']))
 ```
 
@@ -347,7 +354,7 @@ get_scores(lgt)
 ```
 
     ------LogisticRegressionCV--------
-    
+
     -----------------------------------
     Model Scores
 
@@ -445,7 +452,7 @@ get_scores(lgt)
 
 
     -----------------------------------
-    
+
     Test Set Confusion Matrix
 
 
@@ -489,9 +496,9 @@ get_scores(lgt)
 
 
     -----------------------------------
-    
+
     ------LogisticRegressionCV--------
-    
+
 
 
 ----
@@ -507,7 +514,7 @@ get_scores(lda)
 ```
 
     ------LinearDiscriminantAnalysis--------
-    
+
     -----------------------------------
     Model Scores
 
@@ -605,7 +612,7 @@ get_scores(lda)
 
 
     -----------------------------------
-    
+
     Test Set Confusion Matrix
 
 
@@ -649,9 +656,9 @@ get_scores(lda)
 
 
     -----------------------------------
-    
+
     ------LinearDiscriminantAnalysis--------
-    
+
 
 
 ## Quadratic Discriminant Analysis
@@ -663,7 +670,7 @@ get_scores(qda)
 ```
 
     ------QuadraticDiscriminantAnalysis--------
-    
+
     -----------------------------------
     Model Scores
 
@@ -761,7 +768,7 @@ get_scores(qda)
 
 
     -----------------------------------
-    
+
     Test Set Confusion Matrix
 
 
@@ -805,9 +812,9 @@ get_scores(qda)
 
 
     -----------------------------------
-    
+
     ------QuadraticDiscriminantAnalysis--------
-    
+
 
 
 ## k-NN with Cross Validation
@@ -815,7 +822,7 @@ get_scores(qda)
 
 ```python
 max_score = 0
-max_k = 0 
+max_k = 0
 
 for k in range(1,26):
     knn = KNeighborsClassifier(n_neighbors = k)
@@ -823,7 +830,7 @@ for k in range(1,26):
     if score > max_score:
         max_k = k
         max_score = score
-        
+
 knn = KNeighborsClassifier(n_neighbors = max_k)
 knn.fit(X_train,y_train)
 
@@ -831,7 +838,7 @@ get_scores(knn)
 ```
 
     ------KNeighborsClassifier--------
-    
+
     -----------------------------------
     Model Scores
 
@@ -929,7 +936,7 @@ get_scores(knn)
 
 
     -----------------------------------
-    
+
     Test Set Confusion Matrix
 
 
@@ -973,9 +980,9 @@ get_scores(knn)
 
 
     -----------------------------------
-    
+
     ------KNeighborsClassifier--------
-    
+
 
 
 WOW! That worked a little bit too well....
@@ -991,7 +998,7 @@ get_scores(rfc)
 ```
 
     ------RandomForestClassifier--------
-    
+
     -----------------------------------
     Model Scores
 
@@ -1089,7 +1096,7 @@ get_scores(rfc)
 
 
     -----------------------------------
-    
+
     Test Set Confusion Matrix
 
 
@@ -1133,12 +1140,12 @@ get_scores(rfc)
 
 
     -----------------------------------
-    
+
     ------RandomForestClassifier--------
-    
 
 
-Whoa! That worked even better! 
+
+Whoa! That worked even better!
 
 ----
 
@@ -1149,7 +1156,7 @@ get_scores(abc)
 ```
 
     ------AdaBoostClassifier--------
-    
+
     -----------------------------------
     Model Scores
 
@@ -1247,7 +1254,7 @@ get_scores(abc)
 
 
     -----------------------------------
-    
+
     Test Set Confusion Matrix
 
 
@@ -1291,9 +1298,9 @@ get_scores(abc)
 
 
     -----------------------------------
-    
+
     ------AdaBoostClassifier--------
-    
+
 
 
 
@@ -1303,7 +1310,7 @@ get_scores(bgc)
 ```
 
     ------BaggingClassifier--------
-    
+
     -----------------------------------
     Model Scores
 
@@ -1401,7 +1408,7 @@ get_scores(bgc)
 
 
     -----------------------------------
-    
+
     Test Set Confusion Matrix
 
 
@@ -1445,12 +1452,12 @@ get_scores(bgc)
 
 
     -----------------------------------
-    
+
     ------BaggingClassifier--------
-    
 
 
-Yikes! Bagging is the best so far... only 5 wrong! 
+
+Yikes! Bagging is the best so far... only 5 wrong!
 
 ----
 
@@ -1467,10 +1474,10 @@ for model in models:
     fpr,tpr,thresh=metrics.roc_curve(y_train, model.predict_proba(X_train)[:,1])
     # Getting Area Under ROC Curve...
     metrics.roc_auc_score(y_train, model.predict_proba(X_train)[:,1])
-    ax.plot(fpr,tpr, 
+    ax.plot(fpr,tpr,
         label=str(model.__class__).split('.')[-1].split("'")[0]+\
         ' (AUC = '+str(metrics.roc_auc_score(y_train,model.predict_proba(X_train)[:,1]))+")")
-    
+
 
 ax.plot([0, 1], [0, 1], color='b', ls='--', alpha = 0.2)
 ax.set_xlim(-0.1,1)
